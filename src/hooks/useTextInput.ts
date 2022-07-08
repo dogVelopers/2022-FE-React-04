@@ -4,14 +4,16 @@ interface Props {
   initialValue?: string;
 }
 
-function useTextInput({ initialValue = '' }: Props) {
+export default function useTextInput({ initialValue = '' }: Props) {
   const [value, setValue] = useState<string>(initialValue);
 
   function onChange(e: ChangeEvent<HTMLInputElement>) {
     setValue(e.target.value);
   }
 
-  return { value, onChange };
-}
+  function clearValue() {
+    setValue('');
+  }
 
-export default useTextInput;
+  return { value, onChange, clearValue };
+}
