@@ -9,10 +9,15 @@ interface IGetTodos {
 export default function useTodos() {
   // todo 들이 저장되는
   const [todos, setTodos] = useState<ITodo[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function refreshTodos() {
+    setIsLoading(true); // 로딩 시작
+
     const response = await instance.get<{}, IGetTodos>('/todo');
     setTodos(response.records);
+
+    setIsLoading(false); // 로딩 끝
   }
 
   useEffect(() => {
@@ -24,5 +29,10 @@ export default function useTodos() {
     refreshTodos();
   }
 
-  return { todos, createTodo };
+  async function deleteTodo(todoId: string) {
+    await instance.delete(`/todo/${todoId}`);
+    refreshTodos();
+  }
+
+  return { todos, createTodo, deleteTodo, isLoading };
 }
