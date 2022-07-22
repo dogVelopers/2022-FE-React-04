@@ -1,11 +1,10 @@
 import { FormEvent } from 'react';
+import useTodos from '../hooks/api/useTodos';
 import useTextInput from '../hooks/useTextInput';
 
-interface Props {
-  createTodo: (value: string) => void;
-}
-
-export default function InputSection({ createTodo }: Props) {
+// props drilling
+export default function InputSection() {
+  const { createTodo } = useTodos();
   const { value, onChange, clearValue } = useTextInput({});
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {

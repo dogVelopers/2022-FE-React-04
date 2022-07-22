@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useRecoilState } from 'recoil';
+import { todosState } from '../../store/todos';
 
 import { instance } from '../../libs/api';
 
@@ -7,8 +9,7 @@ interface IGetTodos {
 }
 
 export default function useTodos() {
-  // todo 들이 저장되는
-  const [todos, setTodos] = useState<ITodo[]>([]);
+  const [todos, setTodos] = useRecoilState(todosState);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function refreshTodos() {
